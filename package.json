@@ -1,0 +1,14 @@
+{
+  "name": "rfinterior-design",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Website for Rodolfo Falcao Interior Design",
+  "type": "module",
+  "scripts": {
+    "build": "node src/build.mjs",
+    "dev": "node src/build.mjs && node scripts/serve.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
