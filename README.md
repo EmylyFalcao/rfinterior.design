@@ -11,6 +11,9 @@ npm run build   # render every page to dist/
 
 Deploy the `dist/` folder to any static host, such as Netlify, Vercel, Cloudflare Pages or GitHub Pages. URLs match the current Squarespace site (`/portfolio/bow-east-london-apartment-interior-design/`, etc.), so existing links and search rankings carry over.
 
+### GitHub Pages preview
+`.github/workflows/deploy.yml` builds the site and publishes it on every push to `main`. In the repo, go to **Settings → Pages** and set the source to **GitHub Actions**. The workflow sets `BASE_PATH` so links work under `/rfinterior.design/`.
+
 ## Structure
 
 | Path | What it is |

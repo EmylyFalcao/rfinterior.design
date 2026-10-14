@@ -8,6 +8,11 @@ import * as pages from './pages.mjs';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const out = join(root, 'dist');
 
+// Set BASE_PATH when the site is served from a sub-folder, e.g. GitHub Pages at
+// user.github.io/rfinterior.design → BASE_PATH=/rfinterior.design. Empty on the real domain.
+const base = (process.env.BASE_PATH || '').replace(/\/$/, '');
+const withBase = (html) => (base ? html.replace(/(href|src)="\/(?!\/)/g, `$1="${base}/`) : html);
+
 const routes = [
   ['/', pages.home()],
   ['/services/', pages.servicesPage()],
@@ -25,9 +30,10 @@ await cp(join(root, 'src', 'assets'), join(out, 'assets'), { recursive: true });
 for (const [path, html] of routes) {
   const file = join(out, path, 'index.html');
   await mkdir(dirname(file), { recursive: true });
-  await writeFile(file, html);
+  await writeFile(file, withBase(html));
 }
-await writeFile(join(out, '404.html'), pages.notFoundPage());
+await writeFile(join(out, '404.html'), withBase(pages.notFoundPage()));
+await writeFile(join(out, '.nojekyll'), '');
 
 const today = new Date().toISOString().slice(0, 10);
 await writeFile(
